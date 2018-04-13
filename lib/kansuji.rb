@@ -1,6 +1,0 @@
-module DataTables
-
-
-
-  
-end

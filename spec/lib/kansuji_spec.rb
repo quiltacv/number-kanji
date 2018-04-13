@@ -1,7 +1,7 @@
 require 'rails_helper'
 describe String do
   context "should convert" do
-    it "number to kanji 1" do
+    it "number to kanji 1223" do
       '1'.to_kansuji().should == '一'
     end
     it "number to kanji 3" do
@@ -30,6 +30,9 @@ describe String do
     end
     it "number to kanji 1000" do
       '1000'.to_kansuji().should == '千'
+    end
+    it "number to kanji 1011" do
+      '1011'.to_kansuji().should == '千十一'
     end
     it "number to kanji 1600" do
       '1600'.to_kansuji().should == '千六百'
