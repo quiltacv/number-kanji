@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe String do
+describe Integer do
   context "should convert" do
     it "number to kanji 1223" do
       '1'.to_kansuji().should == '一'
