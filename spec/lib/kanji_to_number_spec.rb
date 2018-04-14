@@ -85,5 +85,8 @@ describe Integer do
       it "number to kanji 千百十一兆千百十一億千百十一万千百十一" do
         '千百十一兆千百十一億千百十一万千百十一'.to_number().should == 1111111111111111
       end
+      it "number to kanji 十億二千三十万四千五十" do
+        '十億二千三十万四千五十'.to_number().should == 1020304050
+      end
   end
 end
