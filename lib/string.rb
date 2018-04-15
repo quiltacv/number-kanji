@@ -22,8 +22,8 @@ class String
       return result if string.length == 1
       string.slice!(0)
     end
-  end
 
+  end
   def hash_kanji_to
     array = []
     ['兆','億','万'].each do |item|
@@ -32,13 +32,16 @@ class String
     end
     return array.push(begin: (array.last[:end]+1), end: self.length)
   end
+
   def to_kansuji
-    return (kanji(self)) if self.length <= 5
-    result = ''
-    analysic.reverse.each do |array|
-      result += kanji(array[:value]) + array[:key]
+    return (kanji_to(self)) if self.length <= 5
+    @position_end = self.length
+    @array = []
+    analysic_refactor.reverse.each do |array|
+      kanji_to(array[:value])
+      @a += array[:key]
     end
-    return result
+    return @a
   end
   def analysic
     array = []
@@ -51,26 +54,41 @@ class String
     end
     return array.push(key: get_key(array), value: self[0..(position_end)])
   end
+  def analysic_refactor
+    return @array.push(key: get_key(@array), value: self[0..(@position_end-1)]) if @position_end - 4 <= 0 # chia 4,4,4,4,
+    @array.push(key: get_key(@array), value: self[(@position_end - 4)..@position_end-1]) if @array.present?
+    @array.push(key: get_key(@array), value: self[(@position_end - 4)..@position_end]) if @array.blank?
+    @position_end -= 4
+    analysic_refactor
+  end
   def get_key(array)
+    return '' if @array.blank?
     case array.last[:key];
     when '万'; return '億';
     when '億'; return '兆';
     else return '万'; end
   end
-  def kanji(string)
-    result = ''
-    while string.present? do
-      length = string.length
-      char = string[0]
-      string.slice!(0)
-      next if char == '0'
-      if char == '1'
-        result = result.to_s + KANA_TO_ROM[(char.to_i*10**(length-1)).to_s].to_s
-      else
-        result = result + KANA_TO_ROM[char.to_s]
-        result = result + KANA_TO_ROM[(10**(length-1)).to_s] if length>1
-      end
+  def kanji_to(string)
+    length = string.length
+    return @a.to_s if length == 0
+    char = string[0]
+    string.slice!(0)
+    if char != '0'
+      return (@a = @a.to_s + KANA_TO_ROM[char].to_s) if length == 1 #why a.to_s ma @a='' but @a = nil
+      @a = @a.to_s + KANA_TO_ROM[(char.to_i*10**(length-1)).to_s].to_s if char == '1' #xu ly so 1
+      @a = @a.to_s + KANA_TO_ROM[char.to_s].to_s + KANA_TO_ROM[(10**(length-1)).to_s].to_s if char != '1'
     end
-    return result.to_s
+    kanji_to(string)
   end
 end
+# def kanji_to(string)
+#   length = string.length
+#   return @a if length == 0
+#   char = string[0]
+#   string.slice!(0)
+#   kanji_to(string) if char == '0'
+#   return (@a = @a.to_s + KANA_TO_ROM[char].to_s) if length == 1 #why a.to_s ma @a='' but @a = nil
+#   @a = @a.to_s + KANA_TO_ROM[(char.to_i*10**(length-1)).to_s].to_s if char == '1' #xu ly so 1
+#   @a = @a.to_s + KANA_TO_ROM[char.to_s].to_s + KANA_TO_ROM[(10**(length-1)).to_s].to_s if char != '1'
+#   kanji_to(string)
+# end

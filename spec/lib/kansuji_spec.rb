@@ -70,12 +70,11 @@ describe Integer do
     it "number to kanji 199887766" do
       '199887766'.to_kansuji().should == '一億九千九百八十八万七千七百六十六'
     end
+    it "number to kanji 1020304050" do
+      '1020304050'.to_kansuji().should == '十億二千三十万四千五十'
+    end
+    # it "number to kanji 10203040501020304050" do
+    #   '10203040501020'.to_kansuji().should == '十億二千三十万四千五十'
+    # end
   end
-
-  # context "should convert" do
-  #   string = '千二百三十四'.to_s
-  #   it "number to kanji" do
-  #     DataTables.to_number(string).should == 1234
-  #   end
-  # end
 end
