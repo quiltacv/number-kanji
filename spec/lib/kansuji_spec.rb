@@ -73,8 +73,44 @@ describe Integer do
     it "number to kanji 1020304050" do
       '1020304050'.to_kansuji().should == '十億二千三十万四千五十'
     end
-    # it "number to kanji 10203040501020304050" do
-    #   '10203040501020'.to_kansuji().should == '十億二千三十万四千五十'
-    # end
+    it "number to kanji 1000000000001" do
+      '1000000000001'.to_kansuji().should == '一兆一'
+    end
+    it "number to kanji 10^16" do
+      '10000000000000000'.to_kansuji().should == '京'
+    end
+    it "number to kanji 10000000000007777" do
+      '10000000000007777'.to_kansuji().should == '一京七千七百七十七'
+    end
+    it "number to kanji 100032100000000000000" do
+      '100032100000000000000'.to_kansuji().should == '一垓三京二千百兆'
+    end
+    it "number to kanji 10^20" do
+      '100000000000000000000'.to_kansuji().should == '垓'
+    end
+    it "number to kanji 10^24" do
+      '10000000000000000000000000'.to_kansuji().should == '秭'
+    end
+    it "number to kanji 10^28" do
+      '10000000000000000000000000000'.to_kansuji().should == '穣'
+    end
+    it "number to kanji 10^32" do
+      '100000000000000000000000000000000'.to_kansuji().should == '溝'
+    end
+    it "number to kanji 10^36" do
+      '1000000000000000000000000000000000000'.to_kansuji().should == '澗'
+    end
+    it "number to kanji 10^40" do
+      '10000000000000000000000000000000000000000'.to_kansuji().should == '正'
+    end
+    it "number to kanji 10^44" do
+      '100000000000000000000000000000000000000000000'.to_kansuji().should == '載'
+    end
+    it "number to kanji 101234560000000000000000000000000000000000000" do
+      '101234560000000000000000000000000000000000000'.to_kansuji().should == '一載百二十三正四千五百六十澗'
+    end
+
+
+
   end
 end
