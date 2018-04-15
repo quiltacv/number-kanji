@@ -44,10 +44,13 @@ describe Integer do
       '1679'.to_kansuji().should == '千六百七十九'
     end
     it "number to kanji 10000" do
-      '10000'.to_kansuji().should == '万'
+      '10000'.to_kansuji().should == '一万'
+    end
+    it "number to kanji 20000" do
+      '20000'.to_kansuji().should == '二万'
     end
     it "number to kanji 13000" do
-      '13000'.to_kansuji().should == '万三千'
+      '13000'.to_kansuji().should == '一万三千'
     end
     it "number to kanji 60000" do
       '60000'.to_kansuji().should == '六万'
@@ -77,7 +80,7 @@ describe Integer do
       '1000000000001'.to_kansuji().should == '一兆一'
     end
     it "number to kanji 10^16" do
-      '10000000000000000'.to_kansuji().should == '京'
+      '10000000000000000'.to_kansuji().should == '一京'
     end
     it "number to kanji 10000000000007777" do
       '10000000000007777'.to_kansuji().should == '一京七千七百七十七'
@@ -86,25 +89,25 @@ describe Integer do
       '100032100000000000000'.to_kansuji().should == '一垓三京二千百兆'
     end
     it "number to kanji 10^20" do
-      '100000000000000000000'.to_kansuji().should == '垓'
+      '100000000000000000000'.to_kansuji().should == '一垓'
     end
     it "number to kanji 10^24" do
-      '10000000000000000000000000'.to_kansuji().should == '秭'
+      '1000000000000000000000000'.to_kansuji().should == '一秭'
     end
     it "number to kanji 10^28" do
-      '10000000000000000000000000000'.to_kansuji().should == '穣'
+      '10000000000000000000000000000'.to_kansuji().should == '一穣'
     end
     it "number to kanji 10^32" do
-      '100000000000000000000000000000000'.to_kansuji().should == '溝'
+      '100000000000000000000000000000000'.to_kansuji().should == '一溝'
     end
     it "number to kanji 10^36" do
-      '1000000000000000000000000000000000000'.to_kansuji().should == '澗'
+      '1000000000000000000000000000000000000'.to_kansuji().should == '一澗'
     end
     it "number to kanji 10^40" do
-      '10000000000000000000000000000000000000000'.to_kansuji().should == '正'
+      '10000000000000000000000000000000000000000'.to_kansuji().should == '一正'
     end
     it "number to kanji 10^44" do
-      '100000000000000000000000000000000000000000000'.to_kansuji().should == '載'
+      '100000000000000000000000000000000000000000000'.to_kansuji().should == '一載'
     end
     it "number to kanji 101234560000000000000000000000000000000000000" do
       '101234560000000000000000000000000000000000000'.to_kansuji().should == '一載百二十三正四千五百六十澗'
