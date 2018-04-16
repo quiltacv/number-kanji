@@ -28,6 +28,7 @@ class String
 end
 class Numeric
   def to_kansuji()
+    return KANA_TO_ROM[self] if self==0
     return (kanji_to_demo(self.to_s)) if self.to_s.length <= 5
     result = ''
     self.to_s.reverse.split('').each_slice(4).each.with_index do |fa, index|
