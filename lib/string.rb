@@ -37,21 +37,13 @@ class Numeric
     end
     return result
   end
-  def kanji_to_demo(string)
-    kan = ''
-    while string do
-      if string[0] != '0'
-        return (kan = kan.to_s + KANA_TO_ROM[string[0].to_i]) if string.length == 1 #why a.to_s ma @kan='' but @kan = nil
-        if string[0] == '1' && string.length >= 5 # duoi 10000 k co 一
-          kan = kan.to_s + '一'.to_s + KANA_TO_ROM[(string[0].to_i*10**(string.length-1))].to_s #xu ly so 1
-        elsif string[0] == '1' #tren 10000 co so 一
-          kan = kan.to_s + KANA_TO_ROM[(string[0].to_i*10**(string.length-1))].to_s  #xu ly so 1
-        else
-          kan = kan.to_s + KANA_TO_ROM[string[0].to_i].to_s + KANA_TO_ROM[(10**(string.length-1))].to_s
-        end
-      end
-      string.slice!(0)
-      return kan if string.length == 0
-    end
+  def kanji_to_demo(string, kan = '')
+    begin
+      return string[0] == '0' ? kan : (kan += KANA_TO_ROM[string[0].to_i]) if string.length == 1 #why a.to_s ma @kan='' but @kan = nil
+      next if string[0] == '0'
+      next kan += KANA_TO_ROM[string[0].to_i] + KANA_TO_ROM[(10**(string.length-1))] if string[0] != '1'
+      kan += '一' if string.length >= 5 # duoi 10000 k co 一
+      kan += KANA_TO_ROM[(string[0].to_i * 10**(string.length-1))] #xu ly so 1
+    end while string.slice!(0).present?
   end
 end
