@@ -1,16 +1,16 @@
 require 'datatables'
 class String
   def to_number
-    result = 0
     return get_number(self) if !KEY.any?{|key| self.include?(key)}
-    hash_kanji.each do |array|
-      return result += get_number(self[array[:begin]..(array[:end])]).to_i  if hash_kanji.last == array
-      if array[:end] - array[:begin] == 0
-        result += ROM_TO_KANJI[array[:key]].to_i
-      else
-        result += get_number(self[array[:begin]..(array[:end]-1)]).to_i * ROM_TO_KANJI[array[:key]].to_i # >0
+    potision_begin = 0
+    result = 0
+    KEY.reverse.each do |item|
+      if self.index(item).present?
+          result += get_number(self[potision_begin..self.index(item)-1]).to_i * ROM_TO_KANJI[item].to_i # >0
+          potision_begin = self.index(item) + item.length
       end
     end
+    return result += get_number(self[potision_begin..self.length]).to_i
   end
   def get_number(string)
     result = 0
@@ -24,14 +24,6 @@ class String
       return result if string.length == 1
       string.slice!(0)
     end
-  end
-  def hash_kanji
-    array = []
-    KEY.reverse.each do |item|
-      array.push(begin: 0, end: self.index(item), key: item) if array.blank? && self.index(item).present?
-      array.push(begin: (array.last[:end]+array.last[:key].length), end: self.index(item), key: item) if array.present? && self.index(item).present? && (array.last[:end]+1) <= self.index(item)
-    end
-    return array.push(begin: (array.last[:end]+array.last[:key].length), end: self.length, key:'')
   end
 end
 class Numeric
