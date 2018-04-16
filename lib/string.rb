@@ -12,18 +12,13 @@ class String
     end
     return result += get_number(self[potision_begin..self.length]).to_i
   end
-  def get_number(string)
-    result = 0
-    while string.present? do
+  def get_number(string, result = 0)
+    begin
       current = ROM_TO_KANJI[string[0]].to_i
-      if ROM_TO_KANJI[string[1]].to_i % 10 == 0 && string[1].present? && current % 10 != 0 #eample: 20,200,2020
-        current = current*ROM_TO_KANJI[string[1]].to_i
-        string.slice!(0)
-      end
-      result += current.to_i
+      current = current * ROM_TO_KANJI[string.slice!(1..1) ].to_i if ROM_TO_KANJI[string[1]].to_i % 10 == 0 && string[1].present? && current % 10 != 0
+      result += current.to_i #      next result += current.to_i if string[1].blank? || ROM_TO_KANJI[string[1]].to_i % 10 != 0 || current % 10 == 0 #eample: 20,200,2020 #
       return result if string.length == 1
-      string.slice!(0)
-    end
+    end while string.slice!(0).present?
   end
 end
 class Numeric
