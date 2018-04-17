@@ -1,6 +1,12 @@
 require 'rails_helper'
 describe Integer do
   context "should convert" do
+      it "number to kanji 零" do
+        '零零零零零零零'.to_number.should == 0
+      end
+      it "number to kanji 零" do
+        '零零零零零零零一'.to_number.should == 1
+      end
       it "number to kanji 一" do
         '一'.to_number.should == 1
       end
@@ -99,7 +105,7 @@ describe Integer do
         '一垓'.to_number.should == 10 ** 20
       end
       it "number to kanji 10 ^ 24" do
-        '一秭'.to_number.should == 10 ** 24
+        '一𥝱'.to_number.should == 10 ** 24
       end
       it "number to kanji 10 ^ 28" do
         '一穣'.to_number.should == 10 ** 28
@@ -122,8 +128,8 @@ describe Integer do
       it "number to kanji 一恒河沙" do
         '一恒河沙'.to_number.should == 10 ** 52
       end
-      it "number to kanji 七恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十" do
-        '七恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十'.to_number.should == ('7'+('10'*26)).to_i
+      it "number to kanji 七恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十" do
+        '七恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十'.to_number.should == ('7'+('10'*26)).to_i
       end
       it "number to kanji " do
         '一阿僧祇'.to_number.should == (10 ** 56)
@@ -137,8 +143,17 @@ describe Integer do
       it "number to kanji '一不可思議'" do
         '一不可思議'.to_number.should == (10 ** 64)
       end
-      it "number to kanji 七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十" do
-        '七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十'.to_number.should == ('7'+('10'*32)).to_i
+      it "number to kanji 七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十" do
+        '七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十'.to_number.should == ('7'+('10'*32)).to_i
+      end
+      it "number to kanji 千二百三十四𥝱五千六百七十八垓九千八百七十六京五千四百三十四兆五千六百七十八億九千八百七十六万五千四百五十六" do
+        '千二百三十四𥝱五千六百七十八垓九千八百七十六京五千四百三十四兆五千六百七十八億九千八百七十六万五千四百五十六'.to_number.should == 1234567898765434567898765456
+      end
+      it "number to kanji 十穣二千三十𥝱四千四十垓千百十二兆二億千百十万千十" do
+        '十穣二千三十𥝱四千四十垓千百十二兆二億千百十万千十'.to_number.should == 102030404000001112000211101010
+      end
+      it "number to kanji 一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十" do
+        '一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十'.to_number.should == 10101020200202020303030404002202010101010
       end
   end
 end
