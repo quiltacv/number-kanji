@@ -4,7 +4,7 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>
       (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正",
       (10**44)=>"載",(10**48)=>"極", (10**52)=>"恒河沙",(10**56)=>"阿僧祇",
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
-KEY = []; KAN.each{ |k| KEY.push(k[1]) if k[0] > 10**3 }
+KEY = Array.new(KAN.values.slice(13..KAN.length))
 class String
   def to_number(res = 0, curr = 0)
     return get_number_to(self) unless KEY.any?{ |key| self.include?(key) }
