@@ -15,14 +15,13 @@ class String
     return res + number(self[curr..self.length]).to_i
   end
   def number(str, res = 0, curr = KAN.key(str.slice!(0)).to_i)
-    return curr if str.length == 0
-    curr *= KAN.key(str.slice!(0)) \
-        if (curr % 10 != 0 && KAN.key(str[0]).to_i % 10 == 0 && str[0].present?)
-    return curr + number(str)
+    return curr if str.length == 0 || str.blank?
+    return (curr % 10 != 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
+    (curr * KAN.key(str.slice!(0))+ number(str)) : (curr + number(str))
   end
 end
 class Numeric
-  def to_kansuji(res = '', count = 0)
+  def to_kansuji(res = '')
     return KAN[self] if self == 0
     self.to_s.reverse.split('').each_slice(4).with_index().each do |a, i|
       key = i > 0 ? KAN.to_a[i+12][1] : '' if a.reverse.join('').to_i > 0
@@ -30,10 +29,10 @@ class Numeric
     end
     return res
   end
-  def kanji(str, kan = '')
+  def kanji(str, length = str.length - 1)
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
     return kanji(str[1..(str.length)]) if str[0]=='0'
-    return KAN[str.slice!(0).to_i * 10**str.length] + kanji(str) if str[0] == '1'
-    return KAN[str.slice!(0).to_i] + KAN[10**str.length] + kanji(str)
+    return KAN[str.slice!(0).to_i * 10**length] + kanji(str) if str[0] == '1'
+    return KAN[str.slice!(0).to_i] + KAN[10**length] + kanji(str)
   end
 end
