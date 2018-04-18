@@ -5,20 +5,19 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>
       (10**44)=>"載",(10**48)=>"極", (10**52)=>"恒河沙",(10**56)=>"阿僧祇",
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
 class String
-  def to_number(res = 0, curr = 0, len = KAN.length)
-    return number(self) if KAN.to_a[13..len].empty?{ |a| self.include?(a[1]) }
-    KAN.to_a[13..len].reverse_each do |a|
+  def to_number(res = 0, curr = 0, leng = KAN.length)
+    return number(self) if KAN.to_a[13..leng].empty?{ |a| self.include?(a[1]) }
+    KAN.to_a[13..leng].reverse_each do |a|
       next if self.index(a[1]).blank?
       res += number(self[curr..self.index(a[1])-1]) * KAN.key(a[1])
       curr = self.index(a[1]) + a[1].length
     end
     return res + number(self[curr..self.length]).to_i
   end
-  def number(str, res = 0, curr = '')
-    curr = KAN.key(str.slice!(0)).to_i
-    curr *= KAN.key(str.slice!(0)).to_i if (curr % 10 != 0 &&
-             KAN.key(str[0]).to_i % 10 == 0 && str[0].present?)
+  def number(str, res = 0, curr = KAN.key(str.slice!(0)).to_i)
     return curr if str.length == 0
+    curr *= KAN.key(str.slice!(0)) \
+        if (curr % 10 != 0 && KAN.key(str[0]).to_i % 10 == 0 && str[0].present?)
     return curr + number(str)
   end
 end
@@ -35,6 +34,6 @@ class Numeric
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
     return kanji(str[1..(str.length)]) if str[0]=='0'
     return KAN[str.slice!(0).to_i * 10**str.length] + kanji(str) if str[0] == '1'
-    return KAN[str.slice!(0).to_i] + KAN[(10**str.length)] + kanji(str)
+    return KAN[str.slice!(0).to_i] + KAN[10**str.length] + kanji(str)
   end
 end
