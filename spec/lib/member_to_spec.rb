@@ -1,5 +1,12 @@
 require 'rails_helper'
 describe Integer do
+  context 'text array' do
+    KEY.each.with_index do |key,index|
+      it "text value in KEY 一#{key}" do
+        "一#{key}".to_number.should == (10 ** (4*(index+1)))
+      end
+    end
+  end
   context "should convert" do
       it "number to kanji 零" do
         '零零零零零零零'.to_number.should == 0
@@ -152,8 +159,8 @@ describe Integer do
       it "number to kanji 十穣二千三十𥝱四千四十垓千百十二兆二億千百十万千十" do
         '十穣二千三十𥝱四千四十垓千百十二兆二億千百十万千十'.to_number.should == 102030404000001112000211101010
       end
-      # it "number to kanji 一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十" do
-      #   '一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十'.to_number.should == 10101020200202020303030404002202010101010
-      # end
+      it "number to kanji 一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十" do
+        '一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十'.to_number.should == 10101020200202020303030404002202010101010
+      end
   end
 end
