@@ -27,7 +27,6 @@ end
 class Numeric
   def to_kansuji(res = '', count = 0)
     return KAN[self] if self == 0
-    return (kanji_to_demo(self.to_s)) if self.to_s.length <= 5
     self.to_s.reverse.split('').each_slice(4).with_index().each do |fa, index|
       key = (index > 0) ? KEY[index-1] : '' if fa.reverse.join('').to_i > 0
       res = (kanji_to_demo(fa.reverse.join('')) + key.to_s + res)
