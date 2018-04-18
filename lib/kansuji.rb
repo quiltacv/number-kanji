@@ -5,7 +5,10 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>
       (10**44)=>"載",(10**48)=>"極", (10**52)=>"恒河沙",(10**56)=>"阿僧祇",
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
 class String
-  def to_number(res = 0, curr = 0, leng = KAN.length)
+  def to_number()
+    leng = KAN.length
+    res = 0
+    curr = 0
     return number(self) if KAN.to_a[13..leng].empty?{ |a| self.include?(a[1]) }
     KAN.to_a[13..leng].reverse_each do |a|
       next if self.index(a[1]).blank?
@@ -14,25 +17,26 @@ class String
     end
     return res + number(self[curr..self.length]).to_i
   end
-  def number(str, res = 0, curr = KAN.key(str.slice!(0)).to_i)
+  def number(str)
+    curr = KAN.key(str.slice!(0)).to_i
     return curr if str.length == 0 || str.blank?
-    return (curr % 10 != 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
-    (curr * KAN.key(str.slice!(0))+ number(str)) : (curr + number(str))
+    return ((curr / 10 == 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
+                            curr * KAN.key(str.slice!(0)) : curr) + number(str)
   end
 end
 class Numeric
-  def to_kansuji(res = '')
-    return KAN[self] if self == 0
+  def to_kansuji
+    self == 0 ? (return KAN[self]) : res = ''
     self.to_s.reverse.split('').each_slice(4).with_index().each do |a, i|
       key = i > 0 ? KAN.to_a[i+12][1] : '' if a.reverse.join('').to_i > 0
-      res = kanji(a.reverse.join('')) + key.to_s + res
+      res = kanji(a.reverse.join('')) + key.to_s + res.to_s
+      return res if i == self.to_s.reverse.split('').each_slice(4).size - 1
     end
-    return res
   end
-  def kanji(str, length = str.length - 1)
+  def kanji(str)
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
-    return kanji(str[1..(str.length)]) if str[0]=='0'
-    return KAN[str.slice!(0).to_i * 10**length] + kanji(str) if str[0] == '1'
-    return KAN[str.slice!(0).to_i] + KAN[10**length] + kanji(str)
+    return kanji(str[1..str.length]) if str[0] == '0'
+    return (str[0] == '1' ? KAN[str.slice!(0).to_i * 10**str.length] : \
+            KAN[str.slice!(0).to_i] + KAN[10**str.length]) +  kanji(str)
   end
 end
