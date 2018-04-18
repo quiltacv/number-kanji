@@ -4,38 +4,37 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>
       (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正",
       (10**44)=>"載",(10**48)=>"極", (10**52)=>"恒河沙",(10**56)=>"阿僧祇",
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
-KEY = Array.new(KAN.values.slice(13..KAN.length))
 class String
-  def to_number(res = 0, curr = 0)
-    return get_number_to(self) unless KEY.any?{ |key| self.include?(key) }
-    KEY.reverse_each do |item|
-      next if self.index(item).blank?
-      res += get_number_to(self[curr..self.index(item)-1]) * KAN.key(item)
-      curr = self.index(item) + item.length
+  def to_number(res = 0, curr = 0, len = KAN.length)
+    return number(self) if KAN.to_a[13..len].empty?{ |a| self.include?(a[1]) }
+    KAN.to_a[13..len].reverse_each do |a|
+      next if self.index(a[1]).blank?
+      res += number(self[curr..self.index(a[1])-1]) * KAN.key(a[1])
+      curr = self.index(a[1]) + a[1].length
     end
-    return res + get_number_to(self[curr..self.length]).to_i
+    return res + number(self[curr..self.length]).to_i
   end
-  def get_number_to(str, res = 0, curr = '')
+  def number(str, res = 0, curr = '')
     curr = KAN.key(str.slice!(0)).to_i
     curr *= KAN.key(str.slice!(0)).to_i if (curr % 10 != 0 &&
              KAN.key(str[0]).to_i % 10 == 0 && str[0].present?)
     return curr if str.length == 0
-    return curr + get_number_to(str)
+    return curr + number(str)
   end
 end
 class Numeric
   def to_kansuji(res = '', count = 0)
     return KAN[self] if self == 0
-    self.to_s.reverse.split('').each_slice(4).with_index().each do |fa, index|
-      key = (index > 0) ? KEY[index-1] : '' if fa.reverse.join('').to_i > 0
-      res = kanji_to(fa.reverse.join('')) + key.to_s + res
+    self.to_s.reverse.split('').each_slice(4).with_index().each do |a, i|
+      key = i > 0 ? KAN.to_a[i+12][1] : '' if a.reverse.join('').to_i > 0
+      res = kanji(a.reverse.join('')) + key.to_s + res
     end
     return res
   end
-  def kanji_to(str, kan = '')
+  def kanji(str, kan = '')
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
-    return kanji_to(str[1..(str.length)]) if str[0]=='0'
-    return KAN[str.slice!(0).to_i] + KAN[(10**str.length)] + kanji_to(str) unless str[0] == '1'
-    return KAN[(str.slice!(0).to_i * 10**str.length)] + kanji_to(str)
+    return kanji(str[1..(str.length)]) if str[0]=='0'
+    return KAN[str.slice!(0).to_i * 10**str.length] + kanji(str) if str[0] == '1'
+    return KAN[str.slice!(0).to_i] + KAN[(10**str.length)] + kanji(str)
   end
 end

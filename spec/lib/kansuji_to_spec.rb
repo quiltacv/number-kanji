@@ -1,9 +1,9 @@
 require 'rails_helper'
 describe Integer do
   context 'text array' do
-    KEY.each.with_index do |key,index|
+    KAN.to_a[13..KAN.length].each.with_index do |key,index|
       it "text value with #{(10 ** (4*(index+1)))}" do
-        (10 ** (4*(index+1))).to_kansuji.should == "一#{key}"
+        (10 ** (4*(index+1))).to_kansuji.should == "一#{key[1]}"
       end
     end
   end
@@ -179,7 +179,7 @@ describe Integer do
       next if index == 0
       break if index >12
       string = ''
-      KEY.reverse.each{|key| string += ["一","二","三","四","五","六","七","八","九","十","百","千"].sample + key }
+      KAN.to_a[13..KAN.length].reverse.each{|key| string += ["一","二","三","四","五","六","七","八","九","十","百","千"].sample + key[1] }
       it "Value: #{string}" do
         string.to_number.to_kansuji.should == string
       end

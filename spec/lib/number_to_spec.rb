@@ -1,9 +1,9 @@
 require 'rails_helper'
 describe Integer do
   context 'text array' do
-    KEY.each.with_index do |key,index|
-      it "text value in KEY 一#{key}" do
-        "一#{key}".to_number.should == (10 ** (4*(index+1)))
+    KAN.to_a[13..KAN.length].each.with_index do |key,index|
+      it "text value in KEY 一#{key[1]}" do
+        "一#{key[1]}".to_number.should == (10 ** (4*(index+1)))
       end
     end
   end
