@@ -1,75 +1,75 @@
 require 'rails_helper'
 describe Integer do
   context "should convert" do
-    # it "number to kanji 0" do
-    #   0.to_kansuji.should == '零'
-    # end
-    # it "number to kanji 0" do
-    #   000000.to_kansuji.should == '零'
-    # end
-    # it "number to kanji 0" do
-    #   0000001.to_kansuji.should == '一'
-    # end
-    # it "number to kanji 1223" do
-    #   1.to_kansuji.should == '一'
-    # end
-    # it "number to kanji 3" do
-    #   3.to_kansuji.should == '三'
-    # end
-    # it "number to kanji 10" do
-    #   10.to_kansuji.should == '十'
-    # end
-    # it "number to kanji 13" do
-    #   13.to_kansuji.should == '十三'
-    # end
-    # it "number to kanji 20" do
-    #   20.to_kansuji.should == '二十'
-    # end
-    # it "number to kanji 24" do
-    #   24.to_kansuji.should == '二十四'
-    # end
-    # it "number to kanji 100" do
-    #   100.to_kansuji.should == '百'
-    # end
-    # it "number to kanji 105" do
-    #   105.to_kansuji.should == '百五'
-    # end
-    # it "number to kanji 135" do
-    #   135.to_kansuji.should == '百三十五'
-    # end
-    # it "number to kanji 1000" do
-    #   1000.to_kansuji.should == '千'
-    # end
-    # it "number to kanji 1011" do
-    #   1011.to_kansuji.should == '千十一'
-    # end
-    # it "number to kanji 1010" do
-    #   1010.to_kansuji.should == '千十'
-    # end
-    # it "number to kanji 1600" do
-    #   1600.to_kansuji.should == '千六百'
-    # end
-    # it "number to kanji 1670" do
-    #   1670.to_kansuji.should == '千六百七十'
-    # end
-    # it "number to kanji 1679" do
-    #   1679.to_kansuji.should == '千六百七十九'
-    # end
-    # it "number to kanji 10000" do
-    #   10000.to_kansuji.should == '一万'
-    # end
-    # it "number to kanji 20000" do
-    #   20000.to_kansuji.should == '二万'
-    # end
-    # it "number to kanji 13000" do
-    #   13000.to_kansuji.should == '一万三千'
-    # end
-    # it "number to kanji 60000" do
-    #   60000.to_kansuji.should == '六万'
-    # end
-    # it "number to kanji 10101" do
-    #   10101.to_kansuji.should == '一万百一'
-    # end
+    it "number to kanji 0" do
+      0.to_kansuji.should == '零'
+    end
+    it "number to kanji 0" do
+      000000.to_kansuji.should == '零'
+    end
+    it "number to kanji 0" do
+      0000001.to_kansuji.should == '一'
+    end
+    it "number to kanji 1223" do
+      1.to_kansuji.should == '一'
+    end
+    it "number to kanji 3" do
+      3.to_kansuji.should == '三'
+    end
+    it "number to kanji 10" do
+      10.to_kansuji.should == '十'
+    end
+    it "number to kanji 13" do
+      13.to_kansuji.should == '十三'
+    end
+    it "number to kanji 20" do
+      20.to_kansuji.should == '二十'
+    end
+    it "number to kanji 24" do
+      24.to_kansuji.should == '二十四'
+    end
+    it "number to kanji 100" do
+      100.to_kansuji.should == '百'
+    end
+    it "number to kanji 105" do
+      105.to_kansuji.should == '百五'
+    end
+    it "number to kanji 135" do
+      135.to_kansuji.should == '百三十五'
+    end
+    it "number to kanji 1000" do
+      1000.to_kansuji.should == '千'
+    end
+    it "number to kanji 1011" do
+      1011.to_kansuji.should == '千十一'
+    end
+    it "number to kanji 1010" do
+      1010.to_kansuji.should == '千十'
+    end
+    it "number to kanji 1600" do
+      1600.to_kansuji.should == '千六百'
+    end
+    it "number to kanji 1670" do
+      1670.to_kansuji.should == '千六百七十'
+    end
+    it "number to kanji 1679" do
+      1679.to_kansuji.should == '千六百七十九'
+    end
+    it "number to kanji 10000" do
+      10000.to_kansuji.should == '一万'
+    end
+    it "number to kanji 20000" do
+      20000.to_kansuji.should == '二万'
+    end
+    it "number to kanji 13000" do
+      13000.to_kansuji.should == '一万三千'
+    end
+    it "number to kanji 60000" do
+      60000.to_kansuji.should == '六万'
+    end
+    it "number to kanji 10101" do
+      10101.to_kansuji.should == '一万百一'
+    end
     it "number to kanji 123456" do
       123456.to_kansuji.should == '十二万三千四百五十六'
     end
