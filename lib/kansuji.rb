@@ -1,14 +1,14 @@
-KAN = {0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>"七",
-   8=>"八",9=>"九", 10=>"十", (10**2)=>"百", (10 **3)=>"千", (10**4)=>"万",
-  (10**8)=>"億", (10**12)=>"兆", (10**16)=>"京", (10**20)=>"垓", (10**24)=>"𥝱",
-  (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正", (10**44)=>"載",
-  (10**48)=>"極", (10**52)=>"恒河沙", (10**56)=>"阿僧祇", (10**60)=>"那由他",
-  (10**64)=>"不可思議", (10**68)=>"無量大数" }
+KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>"七",
+      8=>"八",9=>"九", 10=>"十", (10**2)=>"百", (10 **3)=>"千", (10**4)=>"万",
+      (10**8)=>"億", (10**12)=>"兆", (10**16)=>"京", (10**20)=>"垓",(10**24)=>"𥝱",
+      (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正",
+      (10**44)=>"載",(10**48)=>"極", (10**52)=>"恒河沙",(10**56)=>"阿僧祇",
+      (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
 KEY = []; KAN.each{ |k| KEY.push(k[1]) if k[0] > 10**3 }
 class String
   def to_number(res = 0, curr = 0)
     return get_number_to(self) unless KEY.any?{ |key| self.include?(key) }
-    KEY.reverse.each do |item|
+    KEY.reverse_each do |item|
       next if self.index(item).blank?
       res += get_number_to(self[curr..self.index(item)-1]) * KAN.key(item)
       curr = self.index(item) + item.length
@@ -20,7 +20,7 @@ class String
     curr *= KAN.key(str.slice!(0)).to_i if (curr % 10 != 0 &&
              KAN.key(str[0]).to_i % 10 == 0 && str[0].present?)
     return curr if str.length == 0
-    return curr + get_number_to(str, res = 0, curr = '')
+    return curr + get_number_to(str)
   end
 end
 class Numeric
@@ -34,8 +34,8 @@ class Numeric
   end
   def kanji_to(str, kan = '')
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
-    return kanji_to(str[1..(str.length)], kan = '') if str[0]=='0'
+    return kanji_to(str[1..(str.length)]) if str[0]=='0'
     return KAN[str.slice!(0).to_i] + KAN[(10**str.length)] + kanji_to(str) unless str[0] == '1'
-    return KAN[(str.slice!(0).to_i * 10**str.length)] + kanji_to(str, kan = '')
+    return KAN[(str.slice!(0).to_i * 10**str.length)] + kanji_to(str)
   end
 end
