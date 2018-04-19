@@ -1,4 +1,4 @@
-KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>"七",
+  KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>"七",
       8=>"八",9=>"九", 10=>"十", (10**2)=>"百", (10 **3)=>"千", (10**4)=>"万",
       (10**8)=>"億", (10**12)=>"兆", (10**16)=>"京", (10**20)=>"垓",(10**24)=>"𥝱",
       (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正",
@@ -6,11 +6,10 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五",6=>"六", 7=>
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
 class String
   def to_number()
-    leng = KAN.length
     res = 0
     curr = 0
-    return number(self) if KAN.to_a[13..leng].empty?{ |a| self.include?(a[1]) }
-    KAN.to_a[13..leng].reverse_each do |a|
+    return number(self) if KAN.to_a[13..30].empty?{ |a| self.include?(a[1]) }
+    KAN.to_a[13..30].reverse_each do |a|
       next if self.index(a[1]).blank?
       res += number(self[curr..self.index(a[1])-1]) * KAN.key(a[1])
       curr = self.index(a[1]) + a[1].length
