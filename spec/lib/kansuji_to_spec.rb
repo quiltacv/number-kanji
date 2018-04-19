@@ -1,6 +1,22 @@
 require 'rails_helper'
 describe Integer do
+  context 'text array' do
+    KAN.to_a[13..KAN.length].each.with_index do |key,index|
+      it "text value with #{(10 ** (4*(index+1)))}" do
+        (10 ** (4*(index+1))).to_kansuji.should == "一#{key[1]}"
+      end
+    end
+  end
   context "should convert" do
+    it "number to kanji 0" do
+      0.to_kansuji.should == '零'
+    end
+    it "number to kanji 0" do
+      000000.to_kansuji.should == '零'
+    end
+    it "number to kanji 0" do
+      0000001.to_kansuji.should == '一'
+    end
     it "number to kanji 1223" do
       1.to_kansuji.should == '一'
     end
@@ -9,6 +25,9 @@ describe Integer do
     end
     it "number to kanji 10" do
       10.to_kansuji.should == '十'
+    end
+    it "number to kanji 10" do
+      10.33333.to_kansuji.should == '十'
     end
     it "number to kanji 13" do
       13.to_kansuji.should == '十三'
@@ -98,7 +117,7 @@ describe Integer do
       (10 **20).to_kansuji.should == '一垓'
     end
     it "number to kanji 10^24" do
-      (10 ** 24).to_kansuji.should == '一秭'
+      (10 ** 24).to_kansuji.should == '一𥝱'
     end
     it "number to kanji 10^28" do
       (10 ** 28).to_kansuji.should == '一穣'
@@ -119,10 +138,10 @@ describe Integer do
       ('10123456'+ (10 ** 36).to_s).to_i.to_kansuji.should == '一載百二十三正四千五百六十一澗'
     end
     it "number to kanji 1233524650345235465796552341233234" do
-      1233524650345235465796552341233234.to_kansuji.should == '十二溝三千三百五十二穣四千六百五十秭三千四百五十二垓三千五百四十六京五千七百九十六兆五千五百二十三億四千百二十三万三千二百三十四'
+      1233524650345235465796552341233234.to_kansuji.should == '十二溝三千三百五十二穣四千六百五十𥝱三千四百五十二垓三千五百四十六京五千七百九十六兆五千五百二十三億四千百二十三万三千二百三十四'
     end
     it "number to kanji 1234567890098765432112345678900987654321234567890" do
-      1234567890098765432112345678900987654321234567890.to_kansuji.should == '一極二千三百四十五載六千七百八十九正九十八澗七千六百五十四溝三千二百十一穣二千三百四十五秭六千七百八十九垓九十八京七千六百五十四兆三千二百十二億三千四百五十六万七千八百九十'
+      1234567890098765432112345678900987654321234567890.to_kansuji.should == '一極二千三百四十五載六千七百八十九正九十八澗七千六百五十四溝三千二百十一穣二千三百四十五𥝱六千七百八十九垓九十八京七千六百五十四兆三千二百十二億三千四百五十六万七千八百九十'
     end
     it "number to kanji 10 ^ 48" do
       (10 ** 48).to_kansuji.should == '一極'
@@ -131,7 +150,7 @@ describe Integer do
       (10 ** 52).to_kansuji.should == '一恒河沙'
     end
     it "number to kanji ('7'+('10'*26))" do
-      ('7'+'10'*26).to_i.to_kansuji.should == '七恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十'
+      ('7'+'10'*26).to_i.to_kansuji.should == '七恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十'
     end
     it "number to kanji 10 ^ 56" do
       (10 ** 56).to_kansuji.should == '一阿僧祇'
@@ -146,7 +165,27 @@ describe Integer do
       (10 ** 64).to_kansuji.should == '一不可思議'
     end
     it "number to kanji ('7'+'10'*32)" do
-      ('7'+'10'*32).to_i.to_kansuji.should == '七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十秭千十垓千十京千十兆千十億千十万千十'
+      ('7'+'10'*32).to_i.to_kansuji.should == '七不可思議千十那由他千十阿僧祇千十恒河沙千十極千十載千十正千十澗千十溝千十穣千十𥝱千十垓千十京千十兆千十億千十万千十'
+    end
+    it "number to kanji 1234567898765434567898765456" do
+      1234567898765434567898765456.to_kansuji.should == '千二百三十四𥝱五千六百七十八垓九千八百七十六京五千四百三十四兆五千六百七十八億九千八百七十六万五千四百五十六'
+    end
+    it "number to kanji 102030404000001112000211101010" do
+      102030404000001112000211101010.to_kansuji.should == '十穣二千三十𥝱四千四十垓千百十二兆二億千百十万千十'
+    end
+    it "number to kanji 10101020200202020303030404002202010101010" do
+      10101020200202020303030404002202010101010.to_kansuji.should == '一正百一澗二百二溝二十穣二千二十𥝱三千三十垓三千四十京四千二兆二千二十億千十万千十'
+    end
+  end
+  context "mutual try" do
+    KAN.each.with_index() do |kan,index|
+      next if index == 0
+      break if index >12
+      string = ''
+      KAN.to_a[13..KAN.length].reverse.each{|key| string += ["一","二","三","四","五","六","七","八","九","十","百","千"].sample + key[1] }
+      it "Value: #{string}" do
+        string.to_number.to_kansuji.should == string
+      end
     end
   end
 end
