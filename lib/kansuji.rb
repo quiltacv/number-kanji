@@ -27,7 +27,7 @@ end
 class Numeric
   def to_kansuji
     self == 0 ? (return KAN[self]) : result = ''
-    self.to_s.reverse.split('').each_slice(4).with_index().each do |array, index|
+    self.to_i.to_s.reverse.split('').each_slice(4).with_index().each do |array, index|
       key = index > 0 ? KAN.to_a[index+12][1] : '' if array.reverse.join('').to_i > 0
       result = kanji(array.reverse.join('')) + key.to_s + result.to_s
       return result if index == self.to_s.reverse.split('').each_slice(4).size - 1

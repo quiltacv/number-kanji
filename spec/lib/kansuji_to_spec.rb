@@ -26,6 +26,9 @@ describe Integer do
     it "number to kanji 10" do
       10.to_kansuji.should == '十'
     end
+    it "number to kanji 10" do
+      10.33333.to_kansuji.should == '十'
+    end
     it "number to kanji 13" do
       13.to_kansuji.should == '十三'
     end
