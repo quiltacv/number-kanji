@@ -4,32 +4,33 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五", 6=>"六", 7=
       (10**28)=>"穣", (10**32)=>"溝", (10**36)=>"澗", (10**40)=>"正",
       (10**44)=>"載", (10**48)=>"極", (10**52)=>"恒河沙", (10**56)=>"阿僧祇",
       (10**60)=>"那由他", (10**64)=>"不可思議", (10**68)=>"無量大数" }
+ROM = KAN.to_a[13..30]
 class String
   def to_number()
-    res = 0
-    curr = 0
-    return number(self) if KAN.to_a[13..30].empty?{ |a| self.include?(a[1]) }
-    KAN.to_a[13..30].reverse_each do |a|
-      next if self.index(a[1]).blank?
-      res += number(self[curr..self.index(a[1])-1]) * KAN.key(a[1])
-      curr = self.index(a[1]) + a[1].length
+    result = 0
+    current = 0
+    return number(self) if ROM.empty?{ |a| self.include?(a[1]) }
+    ROM.reverse_each do |array|
+      next if self.index(array[1]).nil?
+      result += number(self[current..self.index(array[1])-1]) * KAN.key(array[1])
+      current = self.index(array[1]) + array[1].length
     end
-    return res + number(self[curr..self.length]).to_i
+    return result + number(self[current..self.length]).to_i
   end
   def number(str)
-    curr = KAN.key(str.slice!(0)).to_i
-    return curr if str.length == 0 || str.blank?
-    return ((curr / 10 == 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
-                            curr * KAN.key(str.slice!(0)) : curr) + number(str)
+    current = KAN.key(str.slice!(0)).to_i
+    return current if str.length == 0 || str.nil?
+    return ((current / 10 == 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
+                        current * KAN.key(str.slice!(0)) : current) + number(str)
   end
 end
 class Numeric
   def to_kansuji
-    self == 0 ? (return KAN[self]) : res = ''
-    self.to_s.reverse.split('').each_slice(4).with_index().each do |a, i|
-      key = i > 0 ? KAN.to_a[i+12][1] : '' if a.reverse.join('').to_i > 0
-      res = kanji(a.reverse.join('')) + key.to_s + res.to_s
-      return res if i == self.to_s.reverse.split('').each_slice(4).size - 1
+    self == 0 ? (return KAN[self]) : result = ''
+    self.to_s.reverse.split('').each_slice(4).with_index().each do |array, index|
+      key = index > 0 ? KAN.to_a[index+12][1] : '' if array.reverse.join('').to_i > 0
+      result = kanji(array.reverse.join('')) + key.to_s + result.to_s
+      return result if index == self.to_s.reverse.split('').each_slice(4).size - 1
     end
   end
   def kanji(str)
