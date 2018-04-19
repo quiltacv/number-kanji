@@ -19,16 +19,16 @@ class String
   end
   def number(str)
     current = KAN.key(str.slice!(0)).to_i
-    return current if str.length == 0 || str.nil?
+    return current if str.length == 0
     return ((current / 10 == 0 && KAN.key(str[0]).to_i % 10 == 0) ? \
-                        current * KAN.key(str.slice!(0)) : current) + number(str)
+                        current * KAN.key(str.slice!(0)) : current) + number(str) #1-9 -- 10-1000
   end
-end
+end #112345 ->5,4,3,2,1,1 -> [5,4,3,2][1,1] -> 2345
 class Numeric
   def to_kansuji
     self == 0 ? (return KAN[self]) : result = ''
-    self.to_i.to_s.reverse.split('').each_slice(4).with_index().each do |array, index|
-      key = index > 0 ? KAN.to_a[index+12][1] : '' if array.reverse.join('').to_i > 0
+    self.to_s.reverse.split('').each_slice(4).with_index().each do |array, index|
+      key = index > 0 ? ROM[index-1][1] : '' if array.reverse.join('').to_i > 0 # 4 so 0
       result = kanji(array.reverse.join('')) + key.to_s + result.to_s
       return result if index == self.to_s.reverse.split('').each_slice(4).size - 1
     end
@@ -37,6 +37,6 @@ class Numeric
     return str[0] == '0' ? '' : KAN[str[0].to_i] if str.length == 1
     return kanji(str[1..str.length]) if str[0] == '0'
     return (str[0] == '1' ? KAN[str.slice!(0).to_i * 10**str.length] : \
-            KAN[str.slice!(0).to_i] + KAN[10**str.length]) +  kanji(str)
+            KAN[str.slice!(0).to_i] + KAN[10**str.length]) +  kanji(str) #slice!
   end
 end
