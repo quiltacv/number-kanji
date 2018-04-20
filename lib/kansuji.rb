@@ -7,9 +7,8 @@ KAN = { 0=>"零", 1=>"一", 2=>"二", 3=>"三", 4=>"四", 5=>"五", 6=>"六", 7=
 ROM = KAN.to_a[13..30]
 class String
   def to_number()
-    result = 0
     current = 0
-    return number(self) if ROM.empty?{ |a| self.include?(a[1]) }
+    ROM.empty?{ |a| self.include?(a[1]) } ? (return number(self)) : result = 0
     ROM.reverse_each do |array|
       next if self.index(array[1]).nil?
       result += number(self[current..self.index(array[1])-1]) * KAN.key(array[1])
