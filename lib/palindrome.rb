@@ -8,3 +8,4 @@ def check_palindrome(string)
   return false
 end
 puts check_palindrome(str)
+puts 'quí'
